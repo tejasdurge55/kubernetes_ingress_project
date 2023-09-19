@@ -16,7 +16,8 @@ spec:
       - name: demo1
         image: tejasdurge55/dice_app
         ports:
-        - containerPort: 80
+        - containerPort: 80   #port of the container
+#nginx websever has been utilised inside the application as nginx runs on port 80 we need to define containerPort: 80
 
 ---
 apiVersion: apps/v1
@@ -37,4 +38,5 @@ spec:
       - name: demo2
         image: tejasdurge55/automated_apache_server
         ports:
-        - containerPort: 80
+        - containerPort: 80   #port of the container
+#nginx websever has been utilised inside the application as nginx runs on port 80 we need to define containerPort: 80
