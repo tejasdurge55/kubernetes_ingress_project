@@ -13,7 +13,7 @@ This project demonstrates how to deploy an Ingress web app on Kubernetes using Y
 ## Deploying the Ingress Web App
 
 ### Step 1: Deploy the Demo Applications
-You can deploy the applications using the following Kubernetes deployment file deployment.yaml:
+You can deploy the applications using the following Kubernetes deployment file "deployment.yaml" :
 
 ```yaml
 apiVersion: apps/v1
@@ -34,7 +34,8 @@ spec:
       - name: demo1
         image: tejasdurge55/dice_app
         ports:
-        - containerPort: 80
+        - containerPort: 80   #port of the container
+#nginx websever has been utilised inside the application as nginx runs on port 80 we need to define containerPort: 80
 
 ---
 apiVersion: apps/v1
@@ -55,7 +56,8 @@ spec:
       - name: demo2
         image: tejasdurge55/automated_apache_server
         ports:
-        - containerPort: 80
+        - containerPort: 80   #port of the container
+#nginx websever has been utilised inside the application as nginx runs on port 80 we need to define containerPort: 80
 ```
 
 ### Step 2: Create Services for the Deployments
@@ -66,15 +68,29 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tea-svc
-# ... (service configuration)
-```
+spec:
+  selector:
+    app: demo1
+  ports:
+    - protocol: TCP
+      port: 801  #port of the service 
+      targetPort: 80  #port of the container #containerPort=targetPort #basically port 80 of container is connected to port 801 of service
+  type: ClusterIP 
 
-```yaml
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: coffee-svc
-# ... (service configuration)
+spec:
+  selector:
+    app: demo2
+  ports:
+    - protocol: TCP
+      port: 801  #port of the service 
+      targetPort: 80  #port of the container #containerPort=targetPort #basically port 80 of container is connected to port 801 of service
+  type: ClusterIP
+
 ```
 
 ### Step 3: Configure Ingress
@@ -99,20 +115,27 @@ spec:
           service:
             name: tea-svc
             port:
-              number: 80
+              number: 801  #port of service #basically all "domain-name/" requests would be forwarded to port of service 
+                            #but only forwarded to tea-svc service that contains the dice app
       - path: /gift/(.*)
         pathType: Prefix
         backend:
           service:
             name: coffee-svc
             port:
-              number: 80
+              number: 801  #port of service #basically all "domain-name/gift/" requests would be forwarded to port of service 
+                            #but only forwarded to tea-svc service that contains the gift app
 ```
 
 ## Deploying the Configuration
 Apply the configuration files to your Kubernetes cluster using `kubectl apply -f <file>`.
-
 Make sure to replace `<file>` with the actual file name.
+```
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl apply -f ingress.yaml
+```
+
 
 ## Accessing Your Ingress Web App
 Once deployed and configured, you can access your Ingress web app using the specified host and paths.
