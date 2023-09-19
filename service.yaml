@@ -7,9 +7,9 @@ spec:
     app: demo1
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
+      port: 801  #port of the service 
+      targetPort: 80  #port of the container #containerPort=targetPort #basically port 80 of container is connected to port 801 of service
+  type: ClusterIP 
 
 ---
 apiVersion: v1
@@ -21,6 +21,6 @@ spec:
     app: demo2
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 801  #port of the service 
+      targetPort: 80  #port of the container #containerPort=targetPort #basically port 80 of container is connected to port 801 of service
   type: ClusterIP
