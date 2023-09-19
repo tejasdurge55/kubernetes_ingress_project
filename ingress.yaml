@@ -16,11 +16,13 @@ spec:
           service:
             name: tea-svc
             port:
-              number: 80
+              number: 801  #port of service #basically all "domain-name/" requests would be forwarded to port of service 
+                            #but only forwarded to tea-svc service that contains the dice app
       - path: /gift/(.*)
         pathType: Prefix
         backend:
           service:
             name: coffee-svc
             port:
-              number: 80
+              number: 801  #port of service #basically all "domain-name/gift/" requests would be forwarded to port of service 
+                            #but only forwarded to coffee-svc service that contains the gift app
