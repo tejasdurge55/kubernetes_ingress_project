@@ -5,6 +5,10 @@ This project demonstrates how to deploy an Ingress web app on Kubernetes using Y
 ## Prerequisites
 - Kubernetes cluster up and running.
 - `kubectl` command-line tool installed and configured.
+- minkube users having docker driver should enabele ingress using:
+   ```minikube addons enable ingress```
+  
+  
 
 #### 🛠 Skills Required:
 - Kubernetes Basics
@@ -135,10 +139,40 @@ kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 kubectl apply -f ingress.yaml
 ```
+## Changing hosts file in your PC to access the domain
+Windows users should navigate to C:\Windows\System32\drivers\etc and change the hosts file such that:
+```
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
 
-
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+```
+should be changed to :
+```
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+          127.0.0.1     public.my-services.com
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+```
 ## Accessing Your Ingress Web App
 Once deployed and configured, you can access your Ingress web app using the specified host and paths.
+
+Minikube with docker driver should use the following command to enable port-forwarding from minikube to local computer:
+```minikube tunnel```
 
 Example:
 - http://public.my-services.com/
