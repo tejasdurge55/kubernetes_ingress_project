@@ -6,25 +6,56 @@ This project demonstrates how to deploy an Ingress web app on Kubernetes using Y
 - Kubernetes cluster up and running.
 - `kubectl` command-line tool installed and configured.
 
+#### 🛠 Skills Required:
+- Kubernetes Basics
+- Docker
+
 ## Deploying the Ingress Web App
 
 ### Step 1: Deploy the Demo Applications
-You can deploy two demo applications using the following Kubernetes deployment files:
+You can deploy the applications using the following Kubernetes deployment file deployment.yaml:
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo1
-# ... (deployment configuration)
-```
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo1
+  template:
+    metadata:
+      labels:
+        app: demo1
+    spec:
+      containers:
+      - name: demo1
+        image: tejasdurge55/dice_app
+        ports:
+        - containerPort: 80
 
-```yaml
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo2
-# ... (deployment configuration)
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo2
+  template:
+    metadata:
+      labels:
+        app: demo2
+    spec:
+      containers:
+      - name: demo2
+        image: tejasdurge55/automated_apache_server
+        ports:
+        - containerPort: 80
 ```
 
 ### Step 2: Create Services for the Deployments
@@ -87,14 +118,12 @@ Make sure to replace `<file>` with the actual file name.
 Once deployed and configured, you can access your Ingress web app using the specified host and paths.
 
 Example:
-- http://public.my-services.com/ (Demo1)
-- http://public.my-services.com/gift/ (Demo2)
+- http://public.my-services.com/
+- http://public.my-services.com/gift/
 
 # Thank you! 👋
 
 ## 🔗 Connect with Me
-- [LinkedIn](https://www.linkedin.com/in/your-linkedin-profile)
-- [Twitter](https://twitter.com/your-twitter-profile)
-```
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tejas-durge-0a62a128a/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/TejasDurge55)
 
-Copy and paste this code into your `readme.md` file in your GitHub project, and it will display everything inside Markdown code blocks.
