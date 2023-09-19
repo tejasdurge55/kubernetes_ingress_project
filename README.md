@@ -124,7 +124,7 @@ spec:
             name: coffee-svc
             port:
               number: 801  #port of service #basically all "domain-name/gift/" requests would be forwarded to port of service 
-                            #but only forwarded to tea-svc service that contains the gift app
+                            #but only forwarded to coffee-svc service that contains the gift app
 ```
 
 ## Deploying the Configuration
